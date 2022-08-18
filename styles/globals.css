@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  font-family: "Grape Nuts", cursive;
+  background-color: #002b36;
+  color: white;
+}
+
+.custom-img {
+  background-image: url("../public/bg.jpg");
+}
