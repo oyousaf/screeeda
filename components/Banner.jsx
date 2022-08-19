@@ -7,7 +7,8 @@ const Banner = () => {
     width: "100%",
     playerVars: {
       autoplay: 1,
-      controls: 0,
+      controls: 1,
+      mute: 1,
     },
   };
   return (
