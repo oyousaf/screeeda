@@ -37,7 +37,7 @@ const Navbar = () => {
             <Link href="/">Home</Link>
           </li>
           <li className="p-4 text-gray-300 hover:text-gray-100">
-            <Link href="/#disc">Discord</Link>
+            <Link href="/#disc"><h1 className="text-gray-300 hover:text-gray-100">Discord</h1></Link>
           </li>
           <li className="p-4 text-gray-300 hover:text-gray-100">
             <Link href="/#insta">Instagram</Link>

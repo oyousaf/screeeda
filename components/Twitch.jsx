@@ -10,7 +10,7 @@ const Twitch = () => {
       className="w-full h-screen flex items-center justify-center text-center"
     >
       <h3 className="lg:text-7xl md:text-5xl text-3xl py-4">
-        Follow me on Twitch
+        Check me out on Twitch
         <Link href="https://twitch.tv/screeeda">
           <FaTwitch
             className="m-auto mt-8 cursor-pointer hover:text-purple-600"
