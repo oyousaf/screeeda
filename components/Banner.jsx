@@ -16,8 +16,8 @@ const Banner = () => {
       id="banner"
       className="w-full h-screen flex items-center justify-center text-center"
     >
-      <div className="max-w-[1240px] m-auto p-4">
-        <h3 className="lg:text-7xl md:text-5xl text-3xl pb-4">
+      <div className="max-w-[1240px] m-auto">
+        <h3 className="lg:text-7xl md:text-5xl text-3xl py-4">
           Like, Comment + Subscribe
         </h3>
         <Youtube
