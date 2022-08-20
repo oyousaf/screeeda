@@ -66,7 +66,7 @@ const Navbar = () => {
 
         {/* Mobile */}
         <div onClick={handleNav} className="block sm:hidden z-10">
-          {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+          {nav ? <AiOutlineClose size={30} /> : <AiOutlineMenu size={30} />}
         </div>
         <div
           className={
