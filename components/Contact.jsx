@@ -18,13 +18,10 @@ const Contact = () => {
       id="contact"
       className="w-full h-full justify-center items-center text-center"
     >
-            <div className="flex justify-center py-12">
+      <div className="flex justify-center py-12">
         <Link href="/" alt="top">
-          <div className="rounded-full bg-white shadow-lg shadow-white p-4 cursor-pointer hover:scale-110 ease-in duration-300">
-            <HiOutlineChevronDoubleUp
-              className="text-[#002b36]"
-              size={30}
-            />
+          <div className="animate-pulse rounded-full bg-white shadow-lg shadow-white p-4 cursor-pointer hover:scale-110 ease-in duration-300">
+            <HiOutlineChevronDoubleUp className="text-[#002b36]" size={30} />
           </div>
         </Link>
       </div>
