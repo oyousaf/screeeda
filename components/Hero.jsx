@@ -5,7 +5,7 @@ const Hero = ({ heading, message }) => {
   return (
     <div className="flex items-center justify-center h-screen bg-fixed bg-cover custom-img">
       {/* Overlay */}
-      <div className="absolute top-0 left-0 right-0 bottom-0 bg-[#002b36]/70 z-[2]" />
+      <div className="absolute h-screen top-0 left-0 right-0 bottom-0 bg-[#002b36]/70 z-[2]" />
       <div className="p-5 z-[2] justify-center text-center">
         <h2 className="lg:text-7xl text-5xl font-bold py-4">
           {heading}
