@@ -71,7 +71,6 @@ const Navbar = () => {
     });
   };
 
-  // Scroll to top when the logo is clicked
   const scrollToTop = () => {
     gsap.to(window, {
       duration: 1,
@@ -93,8 +92,8 @@ const Navbar = () => {
             <img
               src="/img/logo.png"
               alt="logo"
-              className="w-10 cursor-pointer"
-              onClick={scrollToTop} // Add click handler to scroll to top
+              className="w-[50px] cursor-pointer"
+              onClick={scrollToTop}
             />
           </div>
 
