@@ -1,12 +1,11 @@
+import { Link } from "react-scroll";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { FaArrowDown } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
-
 import Button from "./Button";
 import VideoPreview from "./VideoPreview";
-
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,7 +31,6 @@ const Hero = () => {
 
   const handleMiniVdClick = () => {
     setHasClicked(true);
-
     setCurrentIndex((prevIndex) => (prevIndex % totalVideos) + 1);
   };
 
@@ -150,13 +148,13 @@ const Hero = () => {
             <p className="mb-5 max-w-64 font-robert-regular text-blue-100">
               Welcome to My <br /> Streamer Website
             </p>
-
-            <Button
-              id="watch-trailer"
-              title="Explore"
-              leftIcon={<FaArrowDown />}
-              containerClass="bg-yellow-300 flex-center gap-1"
-            />
+            <Link to="about" smooth={true} duration={500} offset={-100}>
+              <Button
+                title="Explore"
+                leftIcon={<FaArrowDown />}
+                containerClass="bg-yellow-300 flex-center gap-1"
+              />
+            </Link>
           </div>
         </div>
       </div>
