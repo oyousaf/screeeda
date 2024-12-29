@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Features from "./components/Features";
 import Story from "./components/Story";
 import Contact from "./components/Contact";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       {/*<Features />*/}
       {/*<Story />*/}
       <Contact />
+      <ScrollToTop />
     </main>
   );
 };

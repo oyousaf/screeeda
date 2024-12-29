@@ -15,7 +15,7 @@ const Navbar = () => {
   const navContainerRef = useRef(null);
   const audioElementRef = useRef(null);
 
-  const { y: currentScrollY } = useWindowScroll(); // Track scroll position
+  const { y: currentScrollY } = useWindowScroll();
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -71,6 +71,17 @@ const Navbar = () => {
     });
   };
 
+  // Scroll to top when the logo is clicked
+  const scrollToTop = () => {
+    gsap.to(window, {
+      duration: 1,
+      scrollTo: {
+        y: 0,
+      },
+      ease: "power2.inOut",
+    });
+  };
+
   return (
     <div
       ref={navContainerRef}
@@ -79,7 +90,12 @@ const Navbar = () => {
       <header className="absolute top-1/2 w-full -translate-y-1/2">
         <nav className="flex size-full items-center justify-between p-4 bg-[#003630] rounded-lg">
           <div className="flex items-center gap-7">
-            <img src="/img/logo.png" alt="logo" className="w-10" />
+            <img
+              src="/img/logo.png"
+              alt="logo"
+              className="w-10 cursor-pointer"
+              onClick={scrollToTop} // Add click handler to scroll to top
+            />
           </div>
 
           <div className="flex h-full items-center">
