@@ -1,7 +1,7 @@
 import AnimatedTitle from "./AnimatedTitle";
 import Button from "./Button";
 
-import { FaDiscord, FaInstagram, FaSteam, FaTwitch, FaXbox } from "react-icons/fa";
+import { FaDiscord, FaInstagram, FaSteam, FaTwitch } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 const ImageClipBox = ({ src, clipClass }) => (
@@ -36,11 +36,6 @@ const socialLinks = [
     icon: <FaXTwitter size={40} />,
     colorClass: "text-gray-800 hover:text-black",
   },
-  {
-    href: "https://www.xbox.com/en-GB/play/user/screeeda",
-    icon: <FaXbox size={40} />,
-    colorClass: "text-green-400 hover:text-green-500",
-  },  
 ];
 
 const Contact = () => {
