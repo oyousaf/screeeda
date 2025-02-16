@@ -1,7 +1,7 @@
 import AnimatedTitle from "./AnimatedTitle";
 import Button from "./Button";
 
-import { FaDiscord, FaInstagram, FaPlaystation, FaSteam, FaTwitch, FaXbox } from "react-icons/fa";
+import { FaDiscord, FaInstagram, FaSteam, FaTwitch, FaXbox } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 const ImageClipBox = ({ src, clipClass }) => (
@@ -20,11 +20,6 @@ const socialLinks = [
     href: "https://instagram.com/screeeda",
     icon: <FaInstagram size={40} />,
     colorClass: "text-orange-400 hover:text-orange-500",
-  },
-  {
-    href: "https://instagram.com/screeeda",
-    icon: <FaPlaystation size={40} />,
-    colorClass: "text-blue-400 hover:text-blue-500",
   },
   {
     href: "https://steamcommunity.com/id/screeeda",
