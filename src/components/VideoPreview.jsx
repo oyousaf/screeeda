@@ -1,9 +1,8 @@
 import { gsap } from "gsap";
 import { useState, useRef, useEffect, useCallback } from "react";
 
-export const VideoPreview = ({ children }) => {
+const VideoPreview = ({ children }) => {
   const [isHovering, setIsHovering] = useState(false);
-
   const sectionRef = useRef(null);
   const contentRef = useRef(null);
 
@@ -13,60 +12,64 @@ export const VideoPreview = ({ children }) => {
       const xOffset = clientX - (rect.left + rect.width / 2);
       const yOffset = clientY - (rect.top + rect.height / 2);
 
-      if (isHovering && sectionRef.current && contentRef.current) {
-        const commonConfig = { duration: 1, ease: "power1.out" };
+      if (!isHovering || !sectionRef.current || !contentRef.current) return;
 
-        gsap.to(sectionRef.current, {
-          x: xOffset,
-          y: yOffset,
-          rotationY: xOffset / 2,
-          rotationX: -yOffset / 2,
-          ...commonConfig,
-        });
+      const config = { duration: 0.6, ease: "power2.out" };
 
-        gsap.to(contentRef.current, {
-          x: -xOffset,
-          y: -yOffset,
-          ...commonConfig,
-        });
-      }
+      gsap.to(sectionRef.current, {
+        x: xOffset,
+        y: yOffset,
+        rotationY: xOffset / 2,
+        rotationX: -yOffset / 2,
+        ...config,
+      });
+
+      gsap.to(contentRef.current, {
+        x: -xOffset,
+        y: -yOffset,
+        ...config,
+      });
     },
     [isHovering]
   );
 
   useEffect(() => {
-    if (!sectionRef.current || !contentRef.current) return;
-
-    const commonConfig = { x: 0, y: 0, duration: 1, ease: "power1.out" };
-
-    if (!isHovering) {
-      gsap.to(sectionRef.current, {
-        rotationX: 0,
-        rotationY: 0,
-        ...commonConfig,
+    const reset = {
+      x: 0,
+      y: 0,
+      rotationX: 0,
+      rotationY: 0,
+      duration: 0.6,
+      ease: "power2.out",
+    };
+    if (!isHovering && sectionRef.current && contentRef.current) {
+      gsap.to(sectionRef.current, reset);
+      gsap.to(contentRef.current, {
+        x: 0,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
       });
-
-      gsap.to(contentRef.current, commonConfig);
     }
   }, [isHovering]);
 
   return (
-    <section
+    <div
       ref={sectionRef}
-      onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      className="absolute z-50 size-full overflow-hidden rounded-lg"
+      onMouseMove={handleMouseMove}
+      className="relative size-full overflow-hidden rounded-lg"
       style={{ perspective: "500px" }}
     >
       <div
         ref={contentRef}
-        className="origin-center rounded-lg"
+        className="h-full w-full origin-center rounded-lg will-change-transform"
         style={{ transformStyle: "preserve-3d" }}
       >
         {children}
       </div>
-    </section>
+    </div>
   );
 };
 
