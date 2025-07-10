@@ -66,7 +66,7 @@ export const BentoCard = ({ src, title, description, isComingSoon }) => {
         className="absolute left-0 top-0 size-full object-cover object-center"
         aria-hidden
       />
-      <div className="relative z-10 flex size-full flex-col justify-between p-5 text-blue-50">
+      <div className="relative z-10 flex size-full flex-col justify-between p-5 text-teal-50">
         <div>
           <h1 className="bento-title special-font">{title}</h1>
           {description && (
@@ -102,10 +102,10 @@ const Features = () => (
   <section className="bg-black pb-52">
     <div className="container mx-auto px-3 md:px-10">
       <div className="px-5 py-32">
-        <p className="font-circular-web text-lg text-blue-50">
+        <p className="font-circular-web text-lg text-teal-50">
           Into the Metagame Layer
         </p>
-        <p className="max-w-md font-circular-web text-lg text-blue-50 opacity-50">
+        <p className="max-w-md font-circular-web text-lg text-teal-50 opacity-50">
           Immerse yourself in a rich and ever-expanding universe where a vibrant
           array of products converge into an interconnected overlay experience
           on your world.

@@ -14,7 +14,7 @@ const socialLinks = [
   {
     href: "https://discord.com/invite/yUwFBJ6AZQ",
     icon: <FaDiscord size={40} />,
-    colorClass: "text-blue-400 hover:text-blue-500",
+    colorClass: "text-teal-400 hover:text-teal-500",
   },
   {
     href: "https://instagram.com/screeeda",
@@ -24,7 +24,7 @@ const socialLinks = [
   {
     href: "https://steamcommunity.com/id/screeeda",
     icon: <FaSteam size={40} />,
-    colorClass: "text-blue-950 hover:text-blue-900",
+    colorClass: "text-teal-950 hover:text-teal-900",
   },
   {
     href: "https://twitch.tv/screeeda",
@@ -41,7 +41,7 @@ const socialLinks = [
 const Contact = () => {
   return (
     <div id="socials" className="my-20 min-h-96 w-screen px-10">
-      <div className="relative rounded-lg bg-black py-24 text-blue-50 sm:overflow-hidden">
+      <div className="relative rounded-lg bg-black py-24 text-teal-50 sm:overflow-hidden">
         <div className="absolute -left-20 top-0 hidden h-full w-72 overflow-hidden sm:block lg:left-20 lg:w-96">
           <ImageClipBox src="/img/pubg.jpg" clipClass="contact-clip-path-1" />
           <ImageClipBox
