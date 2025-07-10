@@ -1,12 +1,11 @@
 import AnimatedTitle from "./AnimatedTitle";
 import Button from "./Button";
-
 import { FaDiscord, FaInstagram, FaSteam, FaTwitch } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 const ImageClipBox = ({ src, clipClass }) => (
-  <div className={clipClass}>
-    <img src={src} alt="" />
+  <div className={`${clipClass} overflow-hidden`}>
+    <img src={src} alt="" className="w-full h-full object-cover" />
   </div>
 );
 
@@ -40,9 +39,13 @@ const socialLinks = [
 
 const Contact = () => {
   return (
-    <div id="socials" className="my-20 min-h-96 w-screen px-10">
+    <section
+      id="socials"
+      className="my-20 w-full px-4 sm:px-10 overflow-hidden"
+    >
       <div className="relative rounded-lg bg-teal-900 py-24 text-teal-50 sm:overflow-hidden">
-        <div className="absolute -left-20 top-0 hidden h-full w-72 overflow-hidden sm:block lg:left-20 lg:w-96">
+        {/* Left Images */}
+        <div className="absolute -left-20 top-0 hidden h-full w-72 sm:block lg:left-20 lg:w-96">
           <ImageClipBox src="/img/pubg.jpg" clipClass="contact-clip-path-1" />
           <ImageClipBox
             src="/img/hitman.jpg"
@@ -50,6 +53,7 @@ const Contact = () => {
           />
         </div>
 
+        {/* Right Image */}
         <div className="absolute -top-40 left-20 w-60 sm:top-1/2 md:left-auto md:right-10 lg:top-20 lg:w-80">
           <ImageClipBox
             src="/img/ac.jpg"
@@ -57,6 +61,7 @@ const Contact = () => {
           />
         </div>
 
+        {/* Title + Buttons */}
         <div className="flex flex-col items-center text-center">
           <AnimatedTitle
             title="Let&#39;s c<b>o</b>nnect"
@@ -64,7 +69,13 @@ const Contact = () => {
           />
 
           {socialLinks.map(({ href, icon, colorClass }) => (
-            <a key={href} href={href} target="_blank" rel="noopener noreferrer">
+            <a
+              key={href}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
               <Button
                 title={icon}
                 containerClass={`mt-10 cursor-pointer ${colorClass}`}
@@ -73,7 +84,7 @@ const Contact = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

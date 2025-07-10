@@ -2,7 +2,6 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-
 import AnimatedTitle from "./AnimatedTitle";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -34,8 +33,12 @@ const About = () => {
   );
 
   return (
-    <section id="about" ref={sectionRef} className="min-h-screen w-screen">
-      <div className="relative mb-8 mt-36 flex flex-col items-center gap-5">
+    <section
+      id="about"
+      ref={sectionRef}
+      className="min-h-screen w-full overflow-hidden"
+    >
+      <div className="relative mb-8 mt-36 flex flex-col items-center gap-5 px-4 sm:px-6 lg:px-10">
         <AnimatedTitle
           title="J<b>o</b>in me <b>o</b>n my g<b>a</b>ming <b>a</b>dvent<b>ures</b>"
           containerClass="mt-5 text-center tracking-wide"
@@ -53,7 +56,7 @@ const About = () => {
         </div>
       </div>
 
-      <div ref={clipRef} className="h-dvh w-screen">
+      <div ref={clipRef} className="h-dvh w-full overflow-hidden">
         <div className="mask-clip-path about-image">
           <img
             src="img/about.jpg"

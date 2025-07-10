@@ -21,19 +21,15 @@ const Hero = () => {
 
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
 
-  const handleVideoLoad = () => {
-    setLoadedVideos((prev) => prev + 1);
-  };
+  const handleVideoLoad = () => setLoadedVideos((prev) => prev + 1);
 
   useEffect(() => {
-    if (loadedVideos >= totalVideos - 1) {
-      setLoading(false);
-    }
+    if (loadedVideos >= totalVideos - 1) setLoading(false);
   }, [loadedVideos]);
 
   const handleMiniVdClick = () => {
     setHasClicked(true);
-    setCurrentIndex((prevIndex) => (prevIndex % totalVideos) + 1);
+    setCurrentIndex((prev) => (prev % totalVideos) + 1);
   };
 
   useGSAP(
@@ -59,10 +55,7 @@ const Hero = () => {
         });
       }
     },
-    {
-      dependencies: [currentIndex],
-      revertOnUpdate: true,
-    }
+    { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
   useGSAP(() => {
@@ -73,7 +66,7 @@ const Hero = () => {
 
     gsap.from("#video-frame", {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      borderRadius: "0% 0% 0% 0%",
+      borderRadius: "0%",
       ease: "power1.inOut",
       scrollTrigger: {
         trigger: "#video-frame",
@@ -85,9 +78,9 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative h-dvh w-screen overflow-x-hidden">
+    <section className="relative min-h-screen overflow-hidden">
       {loading && (
-        <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
+        <div className="flex-center absolute z-[100] inset-0 bg-violet-50">
           <div className="three-body">
             <div className="three-body__dot"></div>
             <div className="three-body__dot"></div>
@@ -98,88 +91,81 @@ const Hero = () => {
 
       <div
         id="video-frame"
-        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75"
+        className="relative z-10 min-h-screen overflow-hidden rounded-lg bg-blue-75"
       >
-        <div>
-          {/* Preview Button Layer */}
-          <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
-            <VideoPreview>
-              <div
-                onClick={handleMiniVdClick}
-                className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
-              >
-                <video
-                  ref={miniPreviewRef}
-                  src={getVideoSrc((currentIndex % totalVideos) + 1)}
-                  loop
-                  muted
-                  playsInline
-                  id="current-video"
-                  className="size-64 origin-center scale-150 object-cover object-center"
-                  onLoadedData={handleVideoLoad}
-                  aria-hidden
-                />
-              </div>
-            </VideoPreview>
-          </div>
-
-          {/* New Video (appears on click) */}
-          <video
-            ref={fullVideoRef}
-            src={getVideoSrc(currentIndex)}
-            loop
-            muted
-            playsInline
-            id="next-video"
-            className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
-            onLoadedData={handleVideoLoad}
-            aria-hidden
-          />
-
-          {/* Fullscreen Background */}
-          <video
-            src={getVideoSrc(
-              currentIndex === totalVideos - 1 ? 1 : currentIndex
-            )}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute left-0 top-0 size-full object-cover object-center"
-            onLoadedData={handleVideoLoad}
-            aria-hidden
-          />
-        </div>
-
-        {/* Overlay Text + CTA */}
-        <div className="absolute left-0 top-0 z-40 size-full">
-          <div className="mt-24 px-5 sm:px-10">
-            <h1 className="special-font hero-heading text-teal-100 tracking-wide">
-              scr<b>eee</b>da
-            </h1>
-
-            {/* Visually hidden but SEO-visible description */}
-            <h2 className="sr-only">
-              Where reflex meets reason and every frame tells a story —
-              screeeda, a UK-based FPS and RPG gamer crafting digital tales
-              through skill and strategy.
-            </h2>
-
-            <p className="mb-5 max-w-64 font-robert-regular text-teal-100">
-              Where reflex meets reason <br /> and every frame tells a story
-            </p>
-
-            <Link to="about" smooth={true} duration={500} offset={-100}>
-              <Button
-                title="Explore"
-                leftIcon={<FaArrowDown />}
-                containerClass="bg-yellow-300 flex-center gap-1"
+        {/* Interactive Preview */}
+        <div className="absolute-center z-50 size-64 cursor-pointer overflow-hidden rounded-lg mask-clip-path">
+          <VideoPreview>
+            <div
+              onClick={handleMiniVdClick}
+              className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
+            >
+              <video
+                ref={miniPreviewRef}
+                src={getVideoSrc((currentIndex % totalVideos) + 1)}
+                loop
+                muted
+                playsInline
+                id="current-video"
+                className="size-64 origin-center scale-150 object-cover object-center"
+                onLoadedData={handleVideoLoad}
+                aria-hidden
               />
-            </Link>
-          </div>
+            </div>
+          </VideoPreview>
         </div>
+
+        {/* Full Video Reveal */}
+        <video
+          ref={fullVideoRef}
+          src={getVideoSrc(currentIndex)}
+          loop
+          muted
+          playsInline
+          id="next-video"
+          className="absolute-center invisible z-20 size-64 object-cover object-center"
+          onLoadedData={handleVideoLoad}
+          aria-hidden
+        />
+
+        {/* Full Background Video */}
+        <video
+          src={getVideoSrc(currentIndex === totalVideos - 1 ? 1 : currentIndex)}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          onLoadedData={handleVideoLoad}
+          aria-hidden
+        />
       </div>
-    </div>
+
+      {/* Overlay Text + CTA */}
+      <div className="absolute inset-0 z-40 flex flex-col justify-start px-5 pt-24 sm:px-10">
+        <h1 className="special-font hero-heading text-teal-100 tracking-wide">
+          scr<b>eee</b>da
+        </h1>
+
+        <h2 className="sr-only">
+          Where reflex meets reason and every frame tells a story — screeeda, a
+          UK-based FPS and RPG gamer crafting digital tales through skill and
+          strategy.
+        </h2>
+
+        <p className="mb-5 max-w-64 font-robert-regular text-teal-100">
+          Where reflex meets reason <br /> and every frame tells a story
+        </p>
+
+        <Link to="about" smooth duration={500} offset={-100}>
+          <Button
+            title="Explore"
+            leftIcon={<FaArrowDown />}
+            containerClass="bg-yellow-300 flex-center gap-1"
+          />
+        </Link>
+      </div>
+    </section>
   );
 };
 
