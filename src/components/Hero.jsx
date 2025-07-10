@@ -46,8 +46,6 @@ const Hero = () => {
     }
   }, { dependencies: [currentIndex, hasClicked] });
 
-  // 🔥 Unwanted scroll reveal animation REMOVED
-
   return (
     <section className="relative min-h-screen overflow-hidden">
       {loading && (
