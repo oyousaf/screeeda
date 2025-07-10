@@ -45,7 +45,7 @@ const HeroTitle = () => {
         <Button
           title="Explore"
           leftIcon={<FaArrowDown />}
-          containerClass="bg-green-300 flex-center gap-1"
+          containerClass="transition-all duration-300 ease-in-out hover:bg-teal-900 hover:text-white hover:scale-105 flex-center gap-1"
         />
       </Link>
     </div>
