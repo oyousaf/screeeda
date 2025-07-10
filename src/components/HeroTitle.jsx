@@ -19,7 +19,6 @@ const HeroTitle = () => {
   return (
     <div
       ref={overlayRef}
-      id="hero-overlay"
       className="absolute inset-0 z-20 flex flex-col justify-start px-5 pt-24 sm:px-10"
     >
       <h1 className="special-font hero-heading text-teal-100 tracking-wide">

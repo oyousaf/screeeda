@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-scroll";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { FaArrowDown } from "react-icons/fa";
-import Button from "./Button";
 import HeroTitle from "./HeroTitle";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,22 +10,10 @@ const TOTAL_VIDEOS = 4;
 const Hero = () => {
   const [indexA, setIndexA] = useState(1);
   const [indexB, setIndexB] = useState(2);
-  const [showA, setShowA] = useState(true); // which video is on top
+  const [showA, setShowA] = useState(true);
 
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
   const currentIndex = showA ? indexA : indexB;
-
-  // Sync GSAP overlay animation with video change
-  useGSAP(
-    () => {
-      gsap.fromTo(
-        "#hero-overlay",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
-      );
-    },
-    { dependencies: [currentIndex] }
-  );
 
   // Preload next video
   useEffect(() => {
@@ -50,7 +34,6 @@ const Hero = () => {
     if (!isActive) return;
 
     const nextIndex = (currentIndex % TOTAL_VIDEOS) + 1;
-
     if (showA) {
       setIndexB(nextIndex);
     } else {
@@ -90,7 +73,7 @@ const Hero = () => {
         />
       </div>
 
-      {/* Overlay Content */}
+      {/* Static Overlay Content */}
       <HeroTitle />
     </section>
   );
