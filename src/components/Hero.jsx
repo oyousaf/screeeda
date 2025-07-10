@@ -1,81 +1,97 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-scroll";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { FaArrowDown } from "react-icons/fa";
 import Button from "./Button";
+import HeroTitle from "./HeroTitle";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [fadeOut, setFadeOut] = useState(false);
+const TOTAL_VIDEOS = 4;
 
-  const totalVideos = 4;
-  const videoRef = useRef(null);
+const Hero = () => {
+  const [indexA, setIndexA] = useState(1);
+  const [indexB, setIndexB] = useState(2);
+  const [showA, setShowA] = useState(true); // which video is on top
 
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
+  const currentIndex = showA ? indexA : indexB;
 
-  const handleVideoEnd = () => {
-    setFadeOut(true);
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev % totalVideos) + 1);
-      setFadeOut(false);
-    }, 500);
+  // Sync GSAP overlay animation with video change
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        "#hero-overlay",
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+      );
+    },
+    { dependencies: [currentIndex] }
+  );
+
+  // Preload next video
+  useEffect(() => {
+    const nextIndex = (currentIndex % TOTAL_VIDEOS) + 1;
+    const preloadLink = document.createElement("link");
+    preloadLink.rel = "preload";
+    preloadLink.as = "video";
+    preloadLink.href = getVideoSrc(nextIndex);
+    document.head.appendChild(preloadLink);
+
+    return () => {
+      document.head.removeChild(preloadLink);
+    };
+  }, [currentIndex]);
+
+  const handleVideoEnd = (source) => {
+    const isActive = (source === "A" && showA) || (source === "B" && !showA);
+    if (!isActive) return;
+
+    const nextIndex = (currentIndex % TOTAL_VIDEOS) + 1;
+
+    if (showA) {
+      setIndexB(nextIndex);
+    } else {
+      setIndexA(nextIndex);
+    }
+    setShowA(!showA);
   };
-
-  useGSAP(() => {
-    gsap.fromTo(
-      "#hero-overlay",
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 1, delay: 1, ease: "power2.out" }
-    );
-  }, []);
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Video Background */}
+      {/* Crossfading Videos */}
       <div className="relative z-10 min-h-screen overflow-hidden rounded-lg bg-blue-75">
+        {/* Video A */}
         <video
-          key={currentIndex}
-          ref={videoRef}
-          src={getVideoSrc(currentIndex)}
+          key={indexA}
+          src={getVideoSrc(indexA)}
           autoPlay
           muted
           playsInline
-          onEnded={handleVideoEnd}
-          className={`absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 ${
-            fadeOut ? "opacity-0" : "opacity-100"
+          onEnded={() => handleVideoEnd("A")}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            showA ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
-          aria-hidden
+        />
+
+        {/* Video B */}
+        <video
+          key={indexB}
+          src={getVideoSrc(indexB)}
+          autoPlay
+          muted
+          playsInline
+          onEnded={() => handleVideoEnd("B")}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            showA ? "opacity-0 z-0" : "opacity-100 z-10"
+          }`}
         />
       </div>
 
-      {/* Overlay Text + CTA */}
-      <div
-        id="hero-overlay"
-        className="absolute inset-0 z-40 flex flex-col justify-start px-5 pt-24 sm:px-10"
-      >
-        <h1 className="special-font hero-heading text-teal-100 tracking-wide">
-          scr<b>eee</b>da
-        </h1>
-        <h2 className="sr-only">
-          Where reflex meets reason and every frame tells a story — screeeda, a
-          UK-based FPS and RPG gamer crafting digital tales through skill and
-          strategy.
-        </h2>
-        <p className="mb-5 max-w-64 font-robert-regular text-teal-100">
-          Where reflex meets reason <br /> and every frame tells a story
-        </p>
-        <Link to="about" smooth duration={500} offset={-100}>
-          <Button
-            title="Explore"
-            leftIcon={<FaArrowDown />}
-            containerClass="bg-yellow-300 flex-center gap-1"
-          />
-        </Link>
-      </div>
+      {/* Overlay Content */}
+      <HeroTitle />
     </section>
   );
 };
