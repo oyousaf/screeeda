@@ -4,52 +4,60 @@ import HeroTitle from "./HeroTitle";
 const TOTAL_VIDEOS = 4;
 
 const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [nextIndex, setNextIndex] = useState(2);
-  const [showPrimary, setShowPrimary] = useState(true);
+  const [indexA, setIndexA] = useState(1);
+  const [indexB, setIndexB] = useState(2);
+  const [showA, setShowA] = useState(true);
 
-  const getVideoSrc = (i) => `videos/hero-${i}.mp4`;
+  const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
+  const currentIndex = showA ? indexA : indexB;
 
-  // Preload video using hidden <video> instead of fetch
+  // Preload the next video using fetch
   useEffect(() => {
-    const video = document.createElement("video");
-    video.src = getVideoSrc(nextIndex);
-    video.preload = "auto";
-    video.load();
-  }, [nextIndex]);
+    const nextIndex = (currentIndex % TOTAL_VIDEOS) + 1;
+    fetch(getVideoSrc(nextIndex)).catch(() => {});
+  }, [currentIndex]);
 
-  const handleVideoEnd = () => {
-    const upcoming = (nextIndex % TOTAL_VIDEOS) + 1;
-    setCurrentIndex(nextIndex);
-    setNextIndex(upcoming);
-    setShowPrimary((prev) => !prev);
+  // Handle crossfade and index switch
+  const handleVideoEnd = (source) => {
+    const isActive = (source === "A" && showA) || (source === "B" && !showA);
+    if (!isActive) return;
+
+    const nextIndex = (currentIndex % TOTAL_VIDEOS) + 1;
+    if (showA) {
+      setIndexB(nextIndex);
+    } else {
+      setIndexA(nextIndex);
+    }
+    setShowA(!showA);
   };
 
   return (
     <section className="relative min-h-screen overflow-hidden">
+      {/* Crossfading Background Videos */}
       <div className="relative z-10 min-h-screen overflow-hidden bg-teal-900">
-        {/* Primary video */}
+        {/* Video A */}
         <video
-          key={showPrimary ? currentIndex : nextIndex}
-          src={getVideoSrc(showPrimary ? currentIndex : nextIndex)}
+          key={indexA}
+          src={getVideoSrc(indexA)}
           autoPlay
           muted
           playsInline
-          onEnded={handleVideoEnd}
+          onEnded={() => handleVideoEnd("A")}
           className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-            showPrimary ? "opacity-100 z-10" : "opacity-0 z-0"
+            showA ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         />
 
-        {/* Secondary video layer (crossfade target) */}
+        {/* Video B */}
         <video
-          key={showPrimary ? nextIndex : currentIndex}
-          src={getVideoSrc(showPrimary ? nextIndex : currentIndex)}
+          key={indexB}
+          src={getVideoSrc(indexB)}
           autoPlay
           muted
           playsInline
+          onEnded={() => handleVideoEnd("B")}
           className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-            showPrimary ? "opacity-0 z-0" : "opacity-100 z-10"
+            showA ? "opacity-0 z-0" : "opacity-100 z-10"
           }`}
         />
       </div>
