@@ -13,7 +13,7 @@ const Button = ({
       id={id}
       type={type}
       className={clsx(
-        "group relative z-10 w-fit cursor-pointer overflow-hidden rounded-full bg-violet-50 px-7 py-3 text-black",
+        "group relative z-10 w-fit cursor-pointer overflow-hidden rounded-full bg-teal-50 px-7 py-3 text-teal-900",
         containerClass
       )}
     >
