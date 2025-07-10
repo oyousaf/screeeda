@@ -88,24 +88,24 @@ const Navbar = () => {
   return (
     <div
       ref={navContainerRef}
-      className="fixed inset-x-0 top-4 z-50 h-16 border-dash-none transition-all duration-700 sm:inset-x-6"
+      className="fixed inset-x-0 top-4 z-50 h-16 transition-all duration-700 sm:inset-x-6"
     >
       <header className="absolute top-1/2 w-full -translate-y-1/2">
-        <nav className="flex size-full items-center justify-between p-4 bg-[#003630] rounded-lg">
+        <nav className="flex size-full items-center justify-between p-4 bg-[#003630] rounded-lg overflow-hidden">
           {/* Logo */}
-          <div className="flex items-center gap-7">
+          <div className="flex items-center gap-7 shrink-0">
             <img
               src="/img/logo.png"
               alt="logo"
-              className="w-[50px] cursor-pointer"
+              className="w-[44px] sm:w-[50px] cursor-pointer"
               onClick={scrollToTop}
             />
           </div>
 
-          {/* Nav + Audio */}
-          <div className="flex h-full items-center">
-            {/* Nav Items */}
-            <ul className="hidden md:flex gap-5 items-center">
+          {/* Nav Links + Audio */}
+          <div className="flex items-center gap-6 min-w-0 overflow-hidden flex-nowrap justify-end flex-1">
+            {/* Nav Items (visible on all screen sizes) */}
+            <ul className="flex items-center whitespace-nowrap text-sm overflow-hidden text-ellipsis shrink">
               {navItems.map((item) => (
                 <li key={item}>
                   <button
@@ -120,7 +120,7 @@ const Navbar = () => {
 
             {/* Audio Toggle */}
             <button
-              className="ml-10 flex items-center space-x-0.5"
+              className="flex items-center space-x-0.5 shrink-0"
               onClick={toggleAudioIndicator}
               aria-label="Toggle ambient background music"
             >

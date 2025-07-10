@@ -5,7 +5,6 @@
 @tailwind utilities;
 
 body {
-  width: 100dvw;
   overflow-x: hidden;
   background-color: #003630;
   font-family: "General Sans", sans-serif;
