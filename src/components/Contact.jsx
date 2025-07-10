@@ -14,7 +14,7 @@ const socialLinks = [
   {
     href: "https://discord.com/invite/yUwFBJ6AZQ",
     icon: <FaDiscord size={40} />,
-    colorClass: "text-teal-400 hover:text-teal-500",
+    colorClass: "text-blue-400 hover:text-blue-500",
   },
   {
     href: "https://instagram.com/screeeda",
@@ -24,7 +24,7 @@ const socialLinks = [
   {
     href: "https://steamcommunity.com/id/screeeda",
     icon: <FaSteam size={40} />,
-    colorClass: "text-teal-950 hover:text-teal-900",
+    colorClass: "text-blue-950 hover:text-blue-900",
   },
   {
     href: "https://twitch.tv/screeeda",
