@@ -158,9 +158,17 @@ const Hero = () => {
               scr<b>eee</b>da
             </h1>
 
+            {/* Visually hidden but SEO-visible description */}
+            <h2 className="sr-only">
+              Where reflex meets reason and every frame tells a story —
+              screeeda, a UK-based FPS and RPG gamer crafting digital tales
+              through skill and strategy.
+            </h2>
+
             <p className="mb-5 max-w-64 font-robert-regular text-blue-100">
               Where reflex meets reason <br /> and every frame tells a story
             </p>
+
             <Link to="about" smooth={true} duration={500} offset={-100}>
               <Button
                 title="Explore"
