@@ -60,7 +60,7 @@ const Contact = () => {
         <div className="flex flex-col items-center text-center">
           <AnimatedTitle
             title="Let&#39;s c<b>o</b>nnect"
-            containerClass="special-font !md:text-[6.2rem] w-full font-zentry !text-5xl !font-black !leading-[.9]"
+            containerClass="special-font !md:text-[6.2rem] w-full font-zentry !text-5xl !font-black !leading-[.9] tracking-wide"
           />
 
           {socialLinks.map(({ href, icon, colorClass }) => (

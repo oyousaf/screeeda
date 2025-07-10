@@ -38,7 +38,7 @@ const About = () => {
       <div className="relative mb-8 mt-36 flex flex-col items-center gap-5">
         <AnimatedTitle
           title="J<b>o</b>in me <b>o</b>n my g<b>a</b>ming <b>a</b>dvent<b>ures</b>"
-          containerClass="mt-5 text-center"
+          containerClass="mt-5 text-center tracking-wide"
         />
 
         <div className="about-subtext text-white text-center">
