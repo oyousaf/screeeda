@@ -41,7 +41,7 @@ const socialLinks = [
 const Contact = () => {
   return (
     <div id="socials" className="my-20 min-h-96 w-screen px-10">
-      <div className="relative rounded-lg bg-black py-24 text-teal-50 sm:overflow-hidden">
+      <div className="relative rounded-lg bg-teal-900 py-24 text-teal-50 sm:overflow-hidden">
         <div className="absolute -left-20 top-0 hidden h-full w-72 overflow-hidden sm:block lg:left-20 lg:w-96">
           <ImageClipBox src="/img/pubg.jpg" clipClass="contact-clip-path-1" />
           <ImageClipBox
