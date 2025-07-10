@@ -6,7 +6,7 @@ import { FaXTwitter } from "react-icons/fa6";
 
 const ImageClipBox = ({ src, clipClass }) => (
   <div className={clipClass}>
-    <img src={src} />
+    <img src={src} alt="" />
   </div>
 );
 
@@ -60,17 +60,11 @@ const Contact = () => {
         <div className="flex flex-col items-center text-center">
           <AnimatedTitle
             title="Let&#39;s c<b>o</b>nnect"
-            className="special-font !md:text-[6.2rem] w-full font-zentry !text-5xl !font-black !leading-[.9]"
+            containerClass="special-font !md:text-[6.2rem] w-full font-zentry !text-5xl !font-black !leading-[.9]"
           />
 
-          {/* Social Media Icons */}
-          {socialLinks.map(({ href, icon, colorClass }, index) => (
-            <a
-              key={index}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+          {socialLinks.map(({ href, icon, colorClass }) => (
+            <a key={href} href={href} target="_blank" rel="noopener noreferrer">
               <Button
                 title={icon}
                 containerClass={`mt-10 cursor-pointer ${colorClass}`}

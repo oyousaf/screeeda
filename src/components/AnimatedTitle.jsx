@@ -1,16 +1,18 @@
+import { useEffect, useRef, useMemo } from "react";
 import { gsap } from "gsap";
-import { useEffect, useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import clsx from "clsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const AnimatedTitle = ({ title, containerClass }) => {
+const AnimatedTitle = ({ title = "", containerClass = "" }) => {
   const containerRef = useRef(null);
+
+  const lines = useMemo(() => title.split("<br />"), [title]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const titleAnimation = gsap.timeline({
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "100 bottom",
@@ -19,8 +21,8 @@ const AnimatedTitle = ({ title, containerClass }) => {
         },
       });
 
-      titleAnimation.to(
-        ".animated-word",
+      tl.to(
+        containerRef.current.querySelectorAll(".animated-word"),
         {
           opacity: 1,
           transform: "translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg)",
@@ -31,19 +33,19 @@ const AnimatedTitle = ({ title, containerClass }) => {
       );
     }, containerRef);
 
-    return () => ctx.revert(); // Clean up on unmount
+    return () => ctx.revert();
   }, []);
 
   return (
     <div ref={containerRef} className={clsx("animated-title", containerClass)}>
-      {title.split("<br />").map((line, index) => (
+      {lines.map((line, lineIdx) => (
         <div
-          key={index}
+          key={lineIdx}
           className="flex-center max-w-full flex-wrap gap-2 px-10 md:gap-3"
         >
-          {line.split(" ").map((word, idx) => (
+          {line.split(" ").map((word, wordIdx) => (
             <span
-              key={idx}
+              key={wordIdx}
               className="animated-word"
               dangerouslySetInnerHTML={{ __html: word }}
             />

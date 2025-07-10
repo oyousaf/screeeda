@@ -1,59 +1,52 @@
 import { gsap } from "gsap";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 export const VideoPreview = ({ children }) => {
   const [isHovering, setIsHovering] = useState(false);
 
-  const sectionRef = useRef(null); // Reference for the container section
-  const contentRef = useRef(null); // Reference for the inner content
+  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
 
-  // Handles mouse movement over the container
-  const handleMouseMove = ({ clientX, clientY, currentTarget }) => {
-    const rect = currentTarget.getBoundingClientRect(); // Get dimensions of the container
+  const handleMouseMove = useCallback(
+    ({ clientX, clientY, currentTarget }) => {
+      const rect = currentTarget.getBoundingClientRect();
+      const xOffset = clientX - (rect.left + rect.width / 2);
+      const yOffset = clientY - (rect.top + rect.height / 2);
 
-    const xOffset = clientX - (rect.left + rect.width / 2); // Calculate X offset
-    const yOffset = clientY - (rect.top + rect.height / 2); // Calculate Y offset
+      if (isHovering && sectionRef.current && contentRef.current) {
+        const commonConfig = { duration: 1, ease: "power1.out" };
 
-    if (isHovering) {
-      // Move the container slightly in the direction of the cursor
-      gsap.to(sectionRef.current, {
-        x: xOffset,
-        y: yOffset,
-        rotationY: xOffset / 2, // Add 3D rotation effect
-        rotationX: -yOffset / 2,
-        transformPerspective: 500, // Perspective for realistic 3D effect
-        duration: 1,
-        ease: "power1.out",
-      });
+        gsap.to(sectionRef.current, {
+          x: xOffset,
+          y: yOffset,
+          rotationY: xOffset / 2,
+          rotationX: -yOffset / 2,
+          ...commonConfig,
+        });
 
-      // Move the inner content in the opposite direction for a parallax effect
-      gsap.to(contentRef.current, {
-        x: -xOffset,
-        y: -yOffset,
-        duration: 1,
-        ease: "power1.out",
-      });
-    }
-  };
+        gsap.to(contentRef.current, {
+          x: -xOffset,
+          y: -yOffset,
+          ...commonConfig,
+        });
+      }
+    },
+    [isHovering]
+  );
 
   useEffect(() => {
-    // Reset the position of the content when hover ends
+    if (!sectionRef.current || !contentRef.current) return;
+
+    const commonConfig = { x: 0, y: 0, duration: 1, ease: "power1.out" };
+
     if (!isHovering) {
       gsap.to(sectionRef.current, {
-        x: 0,
-        y: 0,
-        rotationY: 0,
         rotationX: 0,
-        duration: 1,
-        ease: "power1.out",
+        rotationY: 0,
+        ...commonConfig,
       });
 
-      gsap.to(contentRef.current, {
-        x: 0,
-        y: 0,
-        duration: 1,
-        ease: "power1.out",
-      });
+      gsap.to(contentRef.current, commonConfig);
     }
   }, [isHovering]);
 
@@ -64,16 +57,12 @@ export const VideoPreview = ({ children }) => {
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       className="absolute z-50 size-full overflow-hidden rounded-lg"
-      style={{
-        perspective: "500px",
-      }}
+      style={{ perspective: "500px" }}
     >
       <div
         ref={contentRef}
         className="origin-center rounded-lg"
-        style={{
-          transformStyle: "preserve-3d",
-        }}
+        style={{ transformStyle: "preserve-3d" }}
       >
         {children}
       </div>

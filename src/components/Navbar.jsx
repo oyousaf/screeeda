@@ -3,7 +3,6 @@ import { useWindowScroll } from "react-use";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-// Register the ScrollToPlugin
 gsap.registerPlugin(ScrollToPlugin);
 
 const navItems = ["About", "Socials"];
@@ -11,47 +10,55 @@ const navItems = ["About", "Socials"];
 const Navbar = () => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [isIndicatorActive, setIsIndicatorActive] = useState(false);
+  const [isNavVisible, setIsNavVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const navContainerRef = useRef(null);
   const audioElementRef = useRef(null);
 
   const { y: currentScrollY } = useWindowScroll();
-  const [isNavVisible, setIsNavVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
-  // Toggle audio indicator
   const toggleAudioIndicator = () => {
     setIsAudioPlaying((prev) => !prev);
     setIsIndicatorActive((prev) => !prev);
   };
 
-  // Handle audio playback
   useEffect(() => {
+    if (!audioElementRef.current) return;
+
     if (isAudioPlaying) {
-      audioElementRef.current.play();
+      const playPromise = audioElementRef.current.play();
+      if (playPromise?.catch) {
+        playPromise.catch(() => setIsAudioPlaying(false));
+      }
     } else {
       audioElementRef.current.pause();
     }
   }, [isAudioPlaying]);
 
-  // Handle navbar visibility on scroll
   useEffect(() => {
+    const container = navContainerRef.current;
+    if (!container) return;
+
+    const scrollingDown = currentScrollY > lastScrollY;
+    const scrollingUp = currentScrollY < lastScrollY;
+
     if (currentScrollY === 0) {
       setIsNavVisible(true);
-      navContainerRef.current.classList.remove("floating-nav");
-    } else if (currentScrollY > lastScrollY) {
+      container.classList.remove("floating-nav");
+    } else if (scrollingDown) {
       setIsNavVisible(false);
-      navContainerRef.current.classList.add("floating-nav");
-    } else if (currentScrollY < lastScrollY) {
+      container.classList.add("floating-nav");
+    } else if (scrollingUp) {
       setIsNavVisible(true);
-      navContainerRef.current.classList.add("floating-nav");
+      container.classList.add("floating-nav");
     }
 
     setLastScrollY(currentScrollY);
-  }, [currentScrollY, lastScrollY]);
+  }, [currentScrollY]);
 
-  // Animate navbar visibility with GSAP
   useEffect(() => {
+    if (!navContainerRef.current) return;
     gsap.to(navContainerRef.current, {
       y: isNavVisible ? 0 : -100,
       opacity: isNavVisible ? 1 : 0,
@@ -59,7 +66,6 @@ const Navbar = () => {
     });
   }, [isNavVisible]);
 
-  // Smooth scroll using GSAP ScrollToPlugin
   const scrollToSection = (id) => {
     gsap.to(window, {
       duration: 1,
@@ -74,9 +80,7 @@ const Navbar = () => {
   const scrollToTop = () => {
     gsap.to(window, {
       duration: 1,
-      scrollTo: {
-        y: 0,
-      },
+      scrollTo: { y: 0 },
       ease: "power2.inOut",
     });
   };
@@ -88,6 +92,7 @@ const Navbar = () => {
     >
       <header className="absolute top-1/2 w-full -translate-y-1/2">
         <nav className="flex size-full items-center justify-between p-4 bg-[#003630] rounded-lg">
+          {/* Logo */}
           <div className="flex items-center gap-7">
             <img
               src="/img/logo.png"
@@ -97,24 +102,27 @@ const Navbar = () => {
             />
           </div>
 
+          {/* Nav + Audio */}
           <div className="flex h-full items-center">
-            {/* Navbar Links */}
-            <div className="hidden md:block">
+            {/* Nav Items */}
+            <ul className="hidden md:flex gap-5 items-center">
               {navItems.map((item) => (
-                <button
-                  key={item}
-                  className="nav-hover-btn"
-                  onClick={() => scrollToSection(item.toLowerCase())}
-                >
-                  {item}
-                </button>
+                <li key={item}>
+                  <button
+                    className="nav-hover-btn"
+                    onClick={() => scrollToSection(item.toLowerCase())}
+                  >
+                    {item}
+                  </button>
+                </li>
               ))}
-            </div>
+            </ul>
 
-            {/* Audio Toggle Button */}
+            {/* Audio Toggle */}
             <button
               className="ml-10 flex items-center space-x-0.5"
               onClick={toggleAudioIndicator}
+              aria-label="Toggle ambient background music"
             >
               <audio ref={audioElementRef} src="/audio/loop.mp3" loop />
               {[1, 2, 3, 4].map((bar) => (
