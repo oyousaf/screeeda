@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/all";
 import HeroTitle from "./HeroTitle";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const TOTAL_VIDEOS = 4;
 
@@ -15,20 +11,13 @@ const Hero = () => {
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
   const currentIndex = showA ? indexA : indexB;
 
-  // Preload next video
+  // Preload the next video using fetch
   useEffect(() => {
     const nextIndex = (currentIndex % TOTAL_VIDEOS) + 1;
-    const preloadLink = document.createElement("link");
-    preloadLink.rel = "preload";
-    preloadLink.as = "video";
-    preloadLink.href = getVideoSrc(nextIndex);
-    document.head.appendChild(preloadLink);
-
-    return () => {
-      document.head.removeChild(preloadLink);
-    };
+    fetch(getVideoSrc(nextIndex)).catch(() => {});
   }, [currentIndex]);
 
+  // Handle crossfade and index switch
   const handleVideoEnd = (source) => {
     const isActive = (source === "A" && showA) || (source === "B" && !showA);
     if (!isActive) return;
@@ -44,8 +33,8 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Crossfading Videos */}
-      <div className="relative z-10 min-h-screen overflow-hidden rounded-lg bg-blue-75">
+      {/* Crossfading Background Videos */}
+      <div className="relative z-10 min-h-screen overflow-hidden bg-black">
         {/* Video A */}
         <video
           key={indexA}
@@ -73,7 +62,7 @@ const Hero = () => {
         />
       </div>
 
-      {/* Static Overlay Content */}
+      {/* Static Animated Overlay */}
       <HeroTitle />
     </section>
   );

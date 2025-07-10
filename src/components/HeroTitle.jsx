@@ -35,11 +35,17 @@ const HeroTitle = () => {
         Where reflex meets reason <br /> and every frame tells a story
       </p>
 
-      <Link to="about" smooth duration={500} offset={-100}>
+      <Link
+        to="about"
+        smooth
+        duration={500}
+        offset={-100}
+        className="inline-block w-fit"
+      >
         <Button
           title="Explore"
           leftIcon={<FaArrowDown />}
-          containerClass="bg-yellow-300 flex-center gap-1"
+          containerClass="bg-green-300 flex-center gap-1"
         />
       </Link>
     </div>
