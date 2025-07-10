@@ -154,12 +154,12 @@ const Hero = () => {
         {/* Overlay Text + CTA */}
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
-            <h1 className="special-font hero-heading text-blue-100">
+            <h1 className="special-font hero-heading text-blue-100 tracking-wide">
               scr<b>eee</b>da
             </h1>
 
             <p className="mb-5 max-w-64 font-robert-regular text-blue-100">
-              Welcome to My <br /> Streamer Website
+              Reloading reality <br /> One clip at a time
             </p>
             <Link to="about" smooth={true} duration={500} offset={-100}>
               <Button
