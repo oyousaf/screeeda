@@ -159,7 +159,7 @@ const Hero = () => {
             </h1>
 
             <p className="mb-5 max-w-64 font-robert-regular text-blue-100">
-              Reloading reality <br /> One clip at a time
+              Where reflex meets reason <br /> and every frame tells a story
             </p>
             <Link to="about" smooth={true} duration={500} offset={-100}>
               <Button
