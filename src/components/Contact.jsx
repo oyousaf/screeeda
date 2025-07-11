@@ -14,27 +14,27 @@ const socialLinks = [
   {
     href: "https://discord.com/invite/yUwFBJ6AZQ",
     icon: <FaDiscord size={32} />,
-    colorClass: "text-blue-400 hover:text-blue-500",
+    colorClass: "hover:text-blue-500",
   },
   {
     href: "https://instagram.com/screeeda",
     icon: <FaInstagram size={32} />,
-    colorClass: "text-orange-400 hover:text-orange-500",
+    colorClass: "hover:text-orange-500",
   },
   {
     href: "https://steamcommunity.com/id/screeeda",
     icon: <FaSteam size={32} />,
-    colorClass: "text-blue-950 hover:text-blue-900",
+    colorClass: "hover:text-blue-900",
   },
   {
     href: "https://twitch.tv/screeeda",
     icon: <FaTwitch size={32} />,
-    colorClass: "text-violet-400 hover:text-violet-500",
+    colorClass: "hover:text-violet-500",
   },
   {
     href: "https://x.com/screeeda",
     icon: <FaXTwitter size={32} />,
-    colorClass: "text-gray-800 hover:text-black",
+    colorClass: "hover:text-black",
   },
 ];
 
